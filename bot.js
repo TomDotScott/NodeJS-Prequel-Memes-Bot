@@ -38,7 +38,6 @@ async function ScrapeSubreddit(){
   console.log('scraping finished');
 }
 
-client.login("NzE2Mjg4MjkyOTQ1MDAyNTQ3.XtJlfA.JVN1rBiiGCVsL-17CQbOR66o0X0");
 
 
 var quotes = [ 
