@@ -1,6 +1,6 @@
-const Discord = require('discord.js');
+const discord = require('discord.js');
 const Snoowrap = require('snoowrap');
-const client = new Discord.Client();
+const client = new discord.Client();
 let data = [];
 
 client.on('ready', () => {
@@ -10,7 +10,8 @@ client.on('ready', () => {
 
 client.on('message', msg => {
   if (msg.content === 'hello there') {
-    msg.reply(quotes[Math.floor(Math.random() * data.length)]);
+    var newQuote = quotes[Math.floor(Math.random() * data.length)];
+    msg.channel.send(newQuote);
     msg.reply(data[Math.floor(Math.random() * data.length)].link);
   }
 });
@@ -37,7 +38,6 @@ async function ScrapeSubreddit(){
 
   console.log('scraping finished');
 }
-
 
 
 var quotes = [ 
