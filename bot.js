@@ -3,16 +3,43 @@ const Snoowrap = require('snoowrap');
 const client = new discord.Client();
 let data = [];
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
 client.on('ready', () => {
     console.log("Connected as " + client.user.tag);
     ScrapeSubreddit();
+    console.log(quotes.length);
 });
 
 client.on('message', msg => {
-  if (msg.content === 'hello there') {
-    var newQuote = quotes[Math.floor(Math.random() * data.length)];
+  if(msg.content === '&help'){
+    var helpMessage = new discord.MessageEmbed()
+    .setColor('#2323d6')
+    .setTitle('Prequel Bot Help')
+    .addFields(
+      { name: 'To get a Quote', value: 'Type : &executeorder66' },
+      { name: 'To get a Meme', value: 'Type : &dewit' },
+      { name: 'To get Both', value: 'Type : &hellothere'}
+    )
+    .setTimestamp();
+
+    msg.channel.send(helpMessage);
+  }
+  if (msg.content === '&hellothere') {
+    var newQuote = quotes[getRandomInt(0, quotes.length)];
     msg.channel.send(newQuote);
-    msg.reply(data[Math.floor(Math.random() * data.length)].link);
+    msg.reply(data[getRandomInt(0, data.length)].link);
+  }
+  if(msg.content === '&dewit'){
+    msg.reply(data[getRandomInt(0, data.length)].link);
+  }
+  if(msg.content === '&executeorder66'){
+    var newQuote = quotes[getRandomInt(0, quotes.length)];
+    msg.channel.send(newQuote);
   }
 });
 
@@ -39,7 +66,7 @@ async function ScrapeSubreddit(){
   console.log('scraping finished');
 }
 
-
+client.login("NzE2Mjg4MjkyOTQ1MDAyNTQ3.XtKsaA.SSkvUOtNAkDRr-WuzRFbHJQI9Pc");
 
 var quotes = [ 
 	'NUTE : Yes, yes, of coarse...ahhh...as you know, our blockade is perfectly legal, and we’d be happy to recieve the Ambassador...Happy to. -  Episode 1',
@@ -371,5 +398,66 @@ var quotes = [
 	'PALPATINE : It’s good to be home. Your boldness has saved our people, Your -  Episode 1',
 	'YODA : Confer on you, the level of Jedi Knight the Coucil does. But agree on you taking this boy as your Padawan learner, I do not. -  Episode 1',
 	'ANAKIN : What will happen to me now? -  Episode 1',
-	'OBI-WAN : I am your Master now. You will become a Jedi, I promise. -  Episode 1'
+  'OBI-WAN : I am your Master now. You will become a Jedi, I promise. -  Episode 1',
+  'MACE WINDU : You know, M’Lady, Count Dooku was once a Jedi. He wouldn’t assassinate anyone, it is not in his character. - Episode 2',
+	'KI-ADI-MUNDI : He is a political idealist, not a murderer. - Episode 2',
+	'JAR JAR : Obi! Obi! Obi! Mesa sooo smilen to see’en yousa. Wahoooooo! - Episode 2',
+	'JAR JAR : ...and this, I take it, is your apprentice... Nooooooooo! Annie? Noooooooo! Little Bitty Annie? Nooooooo! Yousa so biggen! Yiyiyiyyi! Annie!! Mesa no believen. - Episode 2',
+	'JAR JAR : Annie! Annie! Yiyiyiyiyiyiiii! - Episode 2',
+	'JAR JAR : Lookie... lookie... Oops!... Oh, dear, I’m afraid I’ve forgotten myself again. - Episode 2',
+	'ANAKIN : So have you... grown more beautiful, I mean... and much shorter... for a Senator, I mean. - Episode 2',
+	'PADMÉ : Oh Annie, you’ll always be that little boy I knew on Tatooine. - Episode 2',
+	'JAR JAR : Mesa busten wit happiness seein Yousa again, Annie. Deesa bad times, bombad times. - Episode 2',
+	'ANAKIN : She didn’t even recognise me, Jar Jar. I thought about her every day since we parted... and she’s forgotten me completely. - Episode 2',
+	'JAR JAR : Shesa happy. Happier den mesa see-en her in longo time. - Episode 2',
+	'ANAKIN : She covered that camera. I don’t think she liked me watching her. - Episode 2',
+	'OBI-WAN : You’re using her as bait?? - Episode 2',
+	'OBI-WAN : Because of your mother? - Episode 2',
+	'ANAKIN : I’d rather dream of Padmé. Just Being around her again is... intoxicating. - Episode 2',
+	'ANAKIN : She’s not like the others in the Senate, Master. - Episode 2',
+	'ANAKIN : That was wacky! I almost lost you in the traffic. - Episode 2',
+	'ANAKIN : Don’t say that Master... You’re the closest thing I have to a father... I love you. I don’t want to cause you pain. - Episode 2',
+	'ELAN SLEAZEBAGGANO : Wanna buy some death sticks?\nOBI-WAN : You don’t want to sell me death- sticks.\nELAN : I don’t want to sell you death- sticks.\nOBI-WAN : You want to go home and rethink your life.\nELAN : I want to go home and rethink my life - Episode 2',
+	'JAR JAR : Yousa betchen mesa bottums. - Episode 2',
+	'PADMÉ : Please don’t look at me like that\nANAKIN : Why not?\nPADMÉ : Because I can see what you’re thinking.\nANAKIN : Ahh... so, you have Jedi powers too?\nPADMÉ : It makes me feel uncomfortable. - Episode 2\nPADMÉ : It must be difficult having sworn your life to the Jedi... not being able to visit the places you like... or do the things you like...\nANAKIN : Or be with the people I love.\nPADMÉ : Are you allowed to love? I thought that was forbidden for a Jedi.\mANAKIN : Attachment is forbidden. Possession is forbidden. Compassion, which I would define as unconditional love, is central to a Jedi’s life, so you might say we’re encouraged to love. - Episode 2',
+	'OBI-WAN : That’s impossible... perhaps the archives are incomplete. - Episode 2',
+	'JOCASTA NU : The archives are comprehensive and totally secure, my young Jedi. One thing you may be absolutely sure of - if an item does not appear in our records, it does not exist! - Episode 2',
+	'YODA : An interesting puzzle. Gather round the map reader, younglings. Master Obi-Wan has lost a planet. Find it, we will try... - Episode 2',
+	'YODA : Truly wonderful, the mind of a child is. Uncluttered. To the centre of the pull of gravity go, and find your planet you will. - Episode 2',
+	'ANAKIN : I don’t like sand. It’s coarse and rough and irritating, and it gets everywhere. Not like here. Here everything’s soft... and smooth... - Episode 2',
+	'ANAKIN : I’m sorry. When I’m around you, my mind is no longer my own. - Episode 2',
+	'OBI-WAN : He has a... an emotional connection with her. It’s been there since he was boy. Now he’s confused... distracted. - Episode 2',
+	'ANAKIN : I’m not really supposed to do that... for fun, I mean. If Master Obi-Wan were here, he’d be very grumpy - Episode 2',
+	'ANAKIN : It doesn’t work around you. My mind is always a muddle... I can only think of you. - Episode 2',
+	'ANAKIN : From the moment I met you, all those years ago, a day hasn’t gone by when I haven’t thought of you. And now that I’m close to you again, I’m in agony. The closer I get to you, the worse it gets. The thought of not being with you makes my stomach turn over - my mouth goes dry. I feel dizzy. I can’t breathe. I’m haunted by the kiss you should never have given me. My heart is beating, hoping that kiss will not become a scar. You are in my very soul, tormenting me. What can I do? I will do anything you ask... - Episode 2',
+	'PADME : You listen. We live in a real world. Come back to it. You’re studying to become a Jedi Knight. I’m a Senator. If you follow your thoughts through to conclusion, they will take us to a place we cannot go... regardless of the way we feel about each other. - Episode 2',
+	'ANAKIN : Then you do feel something! There’s an extraordinary connection between us. You can’t deny that. - Episode 2',
+	'PADME : Annie, it doesn’t make any difference. Jedi aren’t allowed to marry. You swore an oath, remember? You’d be expelled from the Order. I will not let you give up your responsibilities... your future, for me. - Episode 2',
+	'PADME : I am not going to give into this. I’m not going to throw my life away. I have more important things to do than fall in love. - Episode 2',
+	'OBI-WAN : That is... good news. - Episode 2',
+  'OBI-WAN : *Visible Confusion* - Episode 2',
+	'OBI-WAN : That’s why I’m here. - Episode 2',
+	'ANAKIN : They only work on the weak-minded. You are anything but weak-minded. - Episode 2',
+	'ANAKIN : I don’t think the system works. - Episode 2',
+	'WATTO : What? I don’t know you... What can I do for you? You look like a Jedi. Whatever it is... I didn’t do it. - Episode 2',
+	'WATTO : You are Annie! It is you! You little womp rat. - Episode 2',
+	'WATTO : You sure sprouted Weehoo! A Jedi! Waddya know? Hey, maybe you couldda help wit some daedbeats who owe... - Episode 2',
+	'C-3PO : Naked. If you pardon the expression. You see, when Master Annie made me, he never quite found the time to give me any outer covering. It’s so humiliating. How would you like it if you had to go around with all your circuits showing? - Episode 2',
+	'C-3PO : Ooooh! That’s tickles. - Episode 2',
+  'JAR JAR : Supreme Chancellor... my august colleagues, I would be proud to propose the motion in question. This is a grave situation, and I’m sure Senator Amidala, and the Queen of Naboo would agree. - Episode 2',
+  'ANAKIN : I killed them. I killed them all, they’re dead; every single one of them, and not just the men…. But the women…. And the children too. They’re like animals and I slaughtered them like animals. I hate them! – Episode 2',
+  'JAR JAR : In response to the direct threat to the Republic from the Confederacy of Independent Systems, I propose that the Senate gives immediate emergency powers to the Supreme Chancellor. - Episode 2',
+	'PALPATINE : It is with great reluctance that I have agreed to this calling. I love democracy... I love the Republic. - Episode 2',
+	'NUTE GUNRAY : Get on with it. Carry out the sentence. I want to see her suffer. - Episode 2',
+  "PADMÉ : I’m not afraid to die. I’ve been dying a little bit each day since you came back into my life\nANAKIN : What are you talking about?\nPADMÉ : I love you.\nANAKIN : You love me?! I thought we decided not to fall in love. That we would be forced to live a lie. That it would destroy our lives...\nPADMÉ : I think our lives are about to be destroyed anyway. My love for you is a puzzle, Annie, for which I have no answers. I can’t control it... and now I don’t care. I truly, deeply love you, and before we die I want you to know.\nANAKIN : I have no desire to be cured of this love either. Long or short, I vow to spend the rest of my life with you - Episode 2",
+  'NUTE GUNRAY : Foul!! She can’t do that... shoot her or something! - Episode 2',
+	'COUNT DOOKU : You have fought gallantly. Worthy of recognition in the history archives of the Jedi Order. Now it is finished. Surrender - and your lives will be spared. - Episode 2',
+	'MACE WINDU : We will not be hostages for you to barter with Dooku. - Episode 2',
+	'COUNT DOOKU : Kenobi, isn’t it? As you can see, my Jedi powers are far beyond yours. Now, back down. - Episode 2',
+	'OBI-WAN : I don’t think so. - Episode 2',
+	'COUNT DOOKU : That’s brave of you, boy - but foolish. I would have thought you’d have learnt your lesson. - Episode 2',
+	'ANAKIN : I’m a slow learner. - Episode 2',
+	'YODA : Count Dooku. No interest in contests, do I have. - Episode 2',
+	'YODA : Not victory, a defeat, it was... Master Obi-Wan. Begun, the Clone War has - Episode 2',
+
 ];
