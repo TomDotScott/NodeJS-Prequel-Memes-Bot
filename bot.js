@@ -3,6 +3,10 @@ const Snoowrap = require('snoowrap');
 const client = new discord.Client();
 let data = [];
 
+var highGround = new Boolean(false);
+var highGroundMessager;
+var msgCount;
+
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -16,6 +20,9 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
+  // -----------------------------------------------------------
+  // ------------------------ COMMANDS -------------------------
+  // -----------------------------------------------------------
   if(msg.content === '&help'){
     var helpMessage = new discord.MessageEmbed()
     .setColor('#2323d6')
@@ -29,17 +36,50 @@ client.on('message', msg => {
 
     msg.channel.send(helpMessage);
   }
+  
+
   if (msg.content === '&hellothere') {
     var newQuote = quotes[getRandomInt(0, quotes.length)];
     msg.channel.send(newQuote);
     msg.reply(data[getRandomInt(0, data.length)].link);
   }
+
   if(msg.content === '&dewit'){
     msg.reply(data[getRandomInt(0, data.length)].link);
   }
+
   if(msg.content === '&executeorder66'){
     var newQuote = quotes[getRandomInt(0, quotes.length)];
     msg.channel.send(newQuote);
+  }
+
+  // -----------------------------------------------------------
+  // ----------------------- FUN STUFF -------------------------
+  // -----------------------------------------------------------
+
+  if(msg.content.includes('hello there') || msg.content.includes('Hello there') || msg.content.includes('Hello There')){
+	  msg.channel.send('General Kenobi')
+  }
+
+  if(getRandomInt(1, 1000) <= 5 && highGround == false){
+	  if(msg.member.user.tag != client.user.tag){
+		msg.channel.send(`It's over, ${msg.author} I have the high ground!`);
+		highGround = true;
+		msgCount = 0;
+		highGroundMessager = msg.member.user.tag;
+	}
+  }
+
+  if(highGround == true && msg.content === 'You underestimate my power' && msg.member.user.tag == highGroundMessager){
+	  msg.channel.send("Don't try it!");
+	  highGround = false;
+	  highGroundMessager = null;
+  }
+
+  msgCount+=1;
+  if(msgCount >= 10 && highGround == true){
+	  highGround = false;
+	  msgCount = 0;
   }
 });
 
